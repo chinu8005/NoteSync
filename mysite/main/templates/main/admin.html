@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mysite/CSS/base.css' %}">
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin3.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/findShapeIndex.js"></script>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div class="app-container">
+        <div class="app-header">
+          <div class="app-header-left">
+            <p class="app-name">Note<span id="sublogo">Sync<span></p>
+                <div class="search-wrapper">
+                    <input class="search-input" type="text" placeholder="Search" data-search-input>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search" viewBox="0 0 24 24">
+                    <defs></defs>
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="M21 21l-4.35-4.35"></path>
+                    </svg>
+                </div>
+
+                
+          </div>
+          <div class="app-header-right">
+            <form action="/adminlogout" method="post">
+              {% csrf_token %}
+            <button class="profile-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(180 12 12)"><path fill="currentColor" d="M6 2h9a2 2 0 0 1 2 2v2h-2V4H6v16h9v-2h2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path fill="currentColor" d="M16.09 15.59L17.5 17l5-5l-5-5l-1.41 1.41L18.67 11H9v2h9.67z"/></g></svg>
+            </button>
+          </form>
+          </div>
+        </div>
+        <div class="app-content">
+          <div class="projects-section">
+            <div class="projects-section-line">
+            </div>
+            <div class="table-container">
+                <div class="Plagiarism-table">
+                    <span>Plagiarism Complaints:</span>
+                    <form method="post">
+                      {% csrf_token %}
+                    <table class="content-table">
+                        <thead>
+                        <tr>
+                            <th>Cid</th>
+                            <th>Orignal</th>
+                            <th>Copy</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in cmp_list %}
+                        {% if i.type == 'Plagiarism' %}
+                        <tr plagiarism-row>
+                            <td>{{i.cid}}</td>
+                            <td><a href="{{i.orignal_url}}" target="_blank">View</a></td>
+                            <td><a href="{{i.copy_url}}" target="_blank">View</a></td>
+                            <td>
+                                <button type="submit" class="complaint-btn" name='delete-plagiarism' value="{{i.Unique_id}}">Delete</button>
+                                <button type="submit" class="complaint-btn" name='close-plagiarism' value="{{i.Unique_id}}">Close</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                  </form>
+            </div>
+            <div class="other-table">
+                <span>Other Complaints:</span>
+                <form method="post">
+                  {% csrf_token %}
+                <table class="content-table">
+                    <thead>
+                    <tr>
+                        <th>Cid</th>
+                        <th>Discription</th>
+                        <th>Note</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in cmp_list %}
+                    {% if i.type == 'Other' %}
+                    <tr other-row>
+                        <td>{{i.cid}}</td>
+                        <td>{{i.discription}}</td>
+                        <td><a href="{{i.note_url}}" target="_blank">View</a></td>
+                        <td>
+                            <button type="submit"  name='close-plagiarism' value="{{i.Unique_id}}" class="complaint-btn">Close</button>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </form>
+        </div>
+            </div>
+        </div>
+      </div>
+      
+      </div>
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        var modeSwitch = document.querySelector('.mode-switch');
+
+        modeSwitch.addEventListener('click', function () {                    
+             document.documentElement.classList.toggle('dark');
+                modeSwitch.classList.toggle('active');
+        });
+
+      });
+      </script>
+
+      <script>
+
+          const searchInput = document.querySelector("[data-search-input]");
+          let plagiarism_rows = document.querySelectorAll("[plagiarism-row]");
+          let other_row = document.querySelectorAll("[other-row]")
+          console.clear();
+          console.log(searchInput)
+          
+          searchInput.addEventListener("input", e => {
+            const search_value = e.target.value;
+            let i = 0;
+            let j = 0;
+            plagiarism_rows.forEach(user => {
+              
+                let cid = user.children[0].textContent;  
+                const isVisible = cid.startsWith(search_value)
+                plagiarism_rows[i].classList.toggle("hide", !isVisible)
+                i = i + 1;
+                
+            })
+            other_row.forEach(user => {
+              let cid = user.children[0].textContent; 
+              const isVisible = cid.startsWith(search_value)
+              other_row[j].classList.toggle("hide", !isVisible)
+              j = j + 1;
+            })
+          })
+
+      </script>
+</body>
+</html>

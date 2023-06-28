@@ -1,0 +1,378 @@
+{% load static %}
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{%static 'mysite/CSS/style.css'%}">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+        <title>NoteSync</title>
+    </head>
+    <body>
+        <div class="image-board">
+            <section class="first-section">
+                <h2 id="mainlogo">Note<span id="sublogo">Sync<span></h2>
+                <div class="img-main-container">
+                    <div class="main-title-animation">
+                        <div class="main-text">Discover a world of<br>Knowledge with NoteSync</div>
+                    </div>
+                    <div class="image-container">
+                        <img src="{%static 'mysite/Image/main-img.png'%}" id="main-image"/>
+                    </div>
+                    
+                    <div class="main-dis-container">
+                        <div class="main-discription">NoteSync is a platform that allows students & teachers to exchange their study materials easily. 
+                            With a user-friendly interface & various features like credit points & leaderboard, our website
+                            is designed to make studying more accessible & rewarding.
+                        </div>
+                        <form action="/sign">
+                            <button class="btn-white">
+                                Discover
+                            </button>
+                        </form>
+                    </div>    
+                </div>    
+            </section>
+            <section class="ud-section">
+                <h2 id="mainlogo" style="color:#000;">Note<span id="sublogo">Sync<span></h2>
+                <div class="ud-title">Join the Knowledge-Sharing Community: Upload and Download Notes Today!</div>
+                <div class="ud-sub-text">Our upload and download notes feature is designed to create a collaborative learning environment.
+                    By sharing your notes and downloading notes from others, you can exchange ideas, perspectives, and 
+                    study strategies that can help you excel in your academic pursuits.</div>
+                    <img src="{% static 'mysite/Image/ud-image.png'%}" alt="" class="ud-scale-img">
+                
+            </section>
+            <section class="leaderboard-sect">
+                <div class="lead-maintxt">Join the Race to the Top: Check Out Our Leaderboard!</div>
+                <div class="lead-subtxt">The leaderboard recognizes and rewards the top contributors in our study community. 
+                                        It showcases the users with the most credit points, the best-performing students, 
+                                        and the most active participants on the platform.</div>
+                    <div class="lead-line">
+                        <div class="lines">
+                        <div class="row">
+                            <div class="track">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="track">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="track">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="track">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="track">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="track">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="card-r1">
+                        <img src="{% static 'mysite/Image/rank1.png'%}" alt="" class="rank-imgs">
+                        <div class="rank-name">
+                            <h3 class="name-rank">Jack Rhysider<span class="rank-name-span">@jackrhysider</span></h3>
+                            <h3 class="rank-no">#1</h3>
+                        </div>
+                    </div>
+                    <div class="card-r2">
+                        <img src="{% static 'mysite/Image/rank2.jpeg'%}" alt="" class="rank-imgs">
+                        <div class="rank-name">
+                            <h3 class="name-rank">Your Name<span class="rank-name-span">@username</span></h3>
+                            <h3 class="rank-no">#2</h3>
+                        </div>
+                    </div>
+                    <div class="card-r3">
+                        <img src="{% static 'mysite/Image/rank3.jpeg'%}" alt="" class="rank-imgs">
+                        <div class="rank-name">
+                            <h3 class="name-rank">Aman Pandey <span class="rank-name-span">@amanpandey</span></h3>
+                            <h3 class="rank-no">#3</h3>
+                        </div>
+                    </div>
+                    <div class="card-r4">
+                        <img src="{% static 'mysite/Image/your-rank.png'%}" alt="" class="rank-imgs">
+                        <div class="rank-name">
+                            <h3 class="name-rank">Sanket N<span class="rank-name-span">@sanket_naikwadi</span></h3>
+                            <h3 class="rank-no">#?</h3>
+                        </div>
+                    </div>
+            </section>
+            <!--<section class="reward-container">
+                <h2 id="mainlogo">Note<span id="sublogo">Sync<span></h2>
+                <section class="image-section">
+                    <div class="main-card-content-animation">
+                        <img src="{% static 'mysite/Image/earn.png' %}" class="img-bg-1" alt="">
+                    </div>
+                </section>    
+                <div class="reward-header">
+                    Students can earn credit points by uploading their own notes. <br> 
+                    These credit points can be exchanged for rewards like gift cards, <br>discounts, 
+                    or even get some courses for free.
+                </div>
+                <div class="marquee">
+                    <span>
+                        Study. Earn. Redeem. Study. Earn. Redeem. Study. Earn. Redeem. 
+                        Study. Earn. Redeem. Study. Earn. Redeem. Study. Earn. Redeem. 
+                        Study. Earn. Redeem. Study. Earn. Redeem. 
+                    </span>
+                    
+                </div>
+                
+            </section>-->
+            <section class="reward-sect">
+                <div class="txtcenter">
+                    <div class="reward-text">
+                        <div class="reward-maintxt">"From Notes to Prizes" Exchange Your Credit Points for Rewards</div>
+                        <div class="reward-subtxt">
+                            Our credit point system is designed to reward users for their contributionsbr to the study community.
+                            You can earn credit points by uploading notes and getting positive reviews.</div>
+                        <div class="reward-subtxt2">
+                            You can exchange your credit points for a variety of exciting rewards. 
+                            From digital downloads to physical merchandise, there's something for everyone on our reward exchange platform.
+                            You can browse the rewards catalog and choose the prize that suits your interests and preferences.
+                        </div>    
+                    </div>
+                </div>
+                <div class="reward-card">
+                    <div class="rimage">
+                        <img src="{% static 'mysite/Image/udemy.png'%}" alt="" style="border-radius: 10px;">
+                    </div>
+                    <div class="center-rtxt">
+                        <div class="reward-title">50% off on buy any course</div>
+                       <div class="btnpadding">
+                            <button class="cta">
+                                <span>Redeem Now</span>
+                                <svg viewBox="0 0 13 10" height="10px" width="15px">
+                                <path d="M1,5 L11,5"></path>
+                                <polyline points="8 1 12 5 8 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>  
+                    </div>
+                </div>
+                <div class="reward-card-1">
+                    <div class="rimage">
+                        <img src="{% static 'mysite/Image/skillshare.png'%}" alt="" style="border-radius: 10px;">
+                    </div>
+                    <div class="center-rtxt">
+                        <div class="reward-title">75% off on buy any course</div>
+                       <div class="btnpadding">
+                            <button class="cta">
+                                <span>Redeem Now</span>
+                                <svg viewBox="0 0 13 10" height="10px" width="15px">
+                                <path d="M1,5 L11,5"></path>
+                                <polyline points="8 1 12 5 8 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>  
+                    </div>
+                </div>
+                <div class="reward-card-2">
+                    <div class="rimage">
+                        <img src="{% static 'mysite/Image/Coursera.png'%}" alt="" style="border-radius: 10px;">
+                    </div>
+                    <div class="center-rtxt">
+                        <div class="reward-title">40% off on buy any course</div>
+                       <div class="btnpadding">
+                            <button class="cta">
+                                <span>Redeem Now</span>
+                                <svg viewBox="0 0 13 10" height="10px" width="15px">
+                                <path d="M1,5 L11,5"></path>
+                                <polyline points="8 1 12 5 8 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>  
+                    </div>
+                </div>
+                <div class="reward-img">
+                    <img src="{% static 'mysite/Image/reward.png'%}" alt="">
+                </div>
+            </section>
+        </div>
+  <!--      <script>
+
+            const t1 = gsap.timeline();
+            console.clear()
+                t1.from(
+                    ".main-title-animation > div",
+                    1.8,
+                    {
+                        opacity: 0,
+                        y: -100,
+                        ease: "power4.out",
+                        delay: 1,
+                        stagger: {
+                            amount: 0.3,
+                        },
+                    });
+                    t1.from(
+                        ".main-text",
+                        1.8,
+                        {
+                            y: 10,
+                            ease: "power4.out",
+                            stagger: {
+                                amount: 0.8,
+                            },
+                        },
+                         "-=2"
+                    );
+        </script>
+
+        <script>
+                const t2 = gsap.timeline();
+                t2.from(
+                ".main-dis-container > div",
+                1.8,
+                {
+                    opacity: 0,
+                    y: -100,
+                    delay: 1,
+                    ease: "power4.out",
+                    stagger: {
+                        amount: 0.3,
+                    },
+                });
+                        
+                t2.from(
+                    ".main-discription",
+                    1.8,
+                    {   
+                        y: 100,
+                        ease: "power4.out",
+                        stagger: {
+                            amount: 0.8,
+                        },
+                    },
+                    "-=2"
+                );
+        </script>
+        <script>
+            const t3 = gsap.timeline();
+            t3.from(
+            ".main-dis-container > button",
+            1.8,
+            {
+                opacity: 0,
+                y: 100,
+                delay: 1,
+                ease: "power4.out",
+                stagger: {
+                    amount: 0.3,
+                },
+            });
+                    
+            t3.from(
+                ".btn-white",
+                1.8,
+                {   
+                    y: 150,
+                    ease: "power4.out",
+                    stagger: {
+                        amount: 0.8,
+                    },
+                },
+                "-=2"
+            );
+    </script>-->
+    <script src="{% static 'mysite/Script/index-gsap.js' %}"></script>
+
+    
+    </body>
+
+</html>

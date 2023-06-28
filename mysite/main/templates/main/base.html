@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mysite/CSS/base.css' %}">
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin3.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/findShapeIndex.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="app-container">
+        <div class="app-header">
+          <div class="app-header-left">
+            <p class="app-name">Note<span id="sublogo">Sync<span></p>
+            {% block search %}
+            {% endblock %}
+          </div>
+          <div class="app-header-right">
+            <button class="mode-switch" title="Switch Theme">
+              <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                <defs></defs>
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+              </svg>
+            </button>
+           <!-- <button class="add-btn" title="Add New Project">
+              <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" /></svg>
+            </button>
+            <button class="notification-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+            </button>-->
+            <form action="/profile" method="post">
+              {% csrf_token %}
+            <button class="profile-btn">
+              <img src = '' id="profile_Image"/>
+              <span id="profilename"></span>
+            </button>
+          </form>
+          </div>
+        </div>
+        <div class="app-content">
+            <div class="app-sidebar">
+              <form action="/dashboard">
+                <button class="app-sidebar-link" name="Dashboard">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" /></svg>
+                </button>
+              </form>
+              <form action="/yourwork">
+                <button class="app-sidebar-link" name="yourwork">
+                  <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M6 20q-.825 0-1.413-.588T4 18v-3h2v3h12v-3h2v3q0 .825-.588 1.413T18 20H6Zm5-4V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16h-2Z"/>
+                  </svg>
+                </button>
+              </form>
+
+              <form action="/leaderboard">
+                <button class="app-sidebar-link" name="leaderboard">
+                    <svg  class="link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 21H9v-8.4a.6.6 0 0 1 .6-.6h4.8a.6.6 0 0 1 .6.6V21Zm5.4 0H15v-2.9a.6.6 0 0 1 .6-.6h4.8a.6.6 0 0 1 .6.6v2.3a.6.6 0 0 1-.6.6ZM9 21v-4.9a.6.6 0 0 0-.6-.6H3.6a.6.6 0 0 0-.6.6v4.3a.6.6 0 0 0 .6.6H9Zm1.806-15.887l.909-1.927a.312.312 0 0 1 .57 0l.91 1.927l2.032.311c.261.04.365.376.176.568l-1.47 1.5l.347 2.118c.044.272-.228.48-.462.351l-1.818-1l-1.818 1c-.233.128-.506-.079-.462-.351l.347-2.118l-1.47-1.5c-.19-.192-.085-.528.175-.568l2.034-.31Z"/>
+                    </svg>
+                </button>
+              </form>
+              <form action="/reward">
+                <button class="app-sidebar-link" name="redeem">
+                  <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11.025 21v-2.15q-1.325-.3-2.288-1.15t-1.412-2.4l1.85-.75q.375 1.2 1.113 1.825t1.937.625q1.025 0 1.738-.463t.712-1.437q0-.875-.55-1.387t-2.55-1.163q-2.15-.675-2.95-1.613t-.8-2.287q0-1.625 1.05-2.525t2.15-1.025V3h2v2.1q1.25.2 2.063.913t1.187 1.737l-1.85.8q-.3-.8-.85-1.2t-1.5-.4q-1.1 0-1.675.488T9.825 8.65q0 .825.75 1.3t2.6 1q1.725.5 2.613 1.588t.887 2.512q0 1.775-1.05 2.7t-2.6 1.15V21h-2Z"/>
+                  </svg>
+                </button>
+              </form>
+              <form action="/logout">
+                <button class="app-sidebar-link" name="redeem">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(180 12 12)"><path fill="currentColor" d="M6 2h9a2 2 0 0 1 2 2v2h-2V4H6v16h9v-2h2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path fill="currentColor" d="M16.09 15.59L17.5 17l5-5l-5-5l-1.41 1.41L18.67 11H9v2h9.67z"/></g></svg>
+                </button>
+              </form>  
+            </div>
+          <div class="projects-section">
+            {% block sectionheader %}
+            <div class="projects-section-header">
+              <p>{% block tabname %}{% endblock %}</p>
+              {% block upbutton %} {% endblock %}
+            </div>
+            {% endblock %}
+            <div class="projects-section-line">
+              
+            </div>
+            {% block maincontainer %}
+            
+            {% endblock %} 
+        </div>
+      </div>
+      
+      </div>
+      </div>
+
+      {% block uploadcard %}
+      {% endblock %}
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        var modeSwitch = document.querySelector('.mode-switch');
+
+        modeSwitch.addEventListener('click', function () {
+          modeSwitch.classList.toggle('active');
+
+          if( modeSwitch.classList.contains('active') === false){
+                  localStorage.setItem("Theme","light")            
+          }
+          else if( modeSwitch.classList.contains('active') === true){
+                    localStorage.setItem("Theme","dark") 
+            } 
+
+          if(localStorage.getItem("Theme") === "light"){
+            document.documentElement.classList.remove('dark');   
+          }
+          else if(localStorage.getItem("Theme") === "dark"){
+            document.documentElement.classList.add('dark');
+          } 
+        });
+        if(localStorage.getItem("Theme") === "light"){
+          document.documentElement.classList.remove('dark');   
+        }
+        else if(localStorage.getItem("Theme") === "dark"){
+          document.documentElement.classList.add('dark');
+        } 
+
+        if(document.documentElement.classList.contains("dark") === true){
+              modeSwitch.classList.add('active')            
+        }
+        else if( modeSwitch.classList.contains('active') === false){
+                modeSwitch.classList.remove('active')            
+
+        }        
+
+      });
+      </script>
+      
+      {% block addscript %}
+      
+      {% endblock %}
+</body>
+</html>

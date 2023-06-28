@@ -1,0 +1,454 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mysite/CSS/yourwork.css' %}">
+    <title>{% block title %}Your Work{% endblock %}</title>
+</head>
+<body>
+    {% block search %}
+    <div class="search-wrapper">
+        <input class="search-input" type="text" placeholder="Search" data-search-input>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search" viewBox="0 0 24 24">
+        <defs></defs>
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+    </div>
+    {% endblock %}
+
+    {% block tabname %} Your Work {% endblock %}
+    {% block upbutton %}
+        <button class="upbtn upload" onclick="hideupcard()">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 16q-.425 0-.713-.288T11 15V7.85L9.125 9.725q-.3.3-.7.3T7.7 9.7q-.3-.3-.287-.712T7.7 8.3l3.6-3.6q.15-.15.325-.212T12 4.425q.2 0 .375.063t.325.212l3.6 3.6q.3.3.288.713T16.3 9.7q-.3.3-.713.313t-.712-.288L13 7.85V15q0 .425-.288.713T12 16Zm-6 4q-.825 0-1.413-.588T4 18v-2q0-.425.288-.713T5 15q.425 0 .713.288T6 16v2h12v-2q0-.425.288-.713T19 15q.425 0 .713.288T20 16v2q0 .825-.588 1.413T18 20H6Z"/>
+                </svg>
+            </div>
+            Upload
+        </button>
+    {% endblock %}
+
+    {% block maincontainer %}
+        <div class="project-boxes jsListView" id="style-3" main-card-container>
+            {% for i in yourwork_list %}
+            <div class="project-box-wrapper" dash-project-box-wrapper>
+            <div class="project-box" style="background-color: #fee4cb;">
+                <div class="project-box-header">
+                <span>{{i.Date}}</span>
+                
+            </div>
+            <div class="project-box-content-header">
+            <p class="box-content-header" style="width: fit-content;">{{i.Subject}}</p>
+            </div>
+            <div class="box-progress-wrapper" style="width: fit-content; display: flex;align-items: center;justify-content: center;text-align: center;">
+            <p class="box-content-subheader">{{i.Title}}</p>
+            </div>
+            <div class="project-box-footer">
+            <div class="participants" style="padding-bottom: 10px;width: fit-content;">
+                <div class="days-left" style="color: #ff942e;">
+                    <button style="background: none;border-style: none;color: #ff942e;"  id="editbtn" onclick="hideeditcard('{{i.PDF}}','{{i.Unique_ID}}')"  value="{{i.Unique_ID}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M5 23.7q-.825 0-1.413-.587T3 21.7v-14q0-.825.588-1.413T5 5.7h8.925l-2 2H5v14h14v-6.95l2-2v8.95q0 .825-.588 1.413T19 23.7H5Zm7-9Zm4.175-8.425l1.425 1.4l-6.6 6.6V15.7h1.4l6.625-6.625l1.425 1.4l-7.2 7.225H9v-4.25l7.175-7.175Zm4.275 4.2l-4.275-4.2l2.5-2.5q.6-.6 1.438-.6t1.412.6l1.4 1.425q.575.575.575 1.4T22.925 8l-2.475 2.475Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="days-left" style="color: #ff942e;">
+            <form method="POST">
+                {% csrf_token %}
+                    <button style="background: none;border-style: none;color: #ff942e;" name="delbtn" value="{{i.Unique_ID}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+        
+    {% endblock %}
+    {% block uploadcard %}
+        <div class="upload-notes-container hide" id="upcardid">
+            <div class="cross-btn-place1">
+                <div class="close-tab">
+                    <a class="close-btn" onclick="hideupcardcross()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59L7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12L5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+                <div class="upload-container">
+                    
+                        <div class="upload-dcontainer">
+                            <input type="file" class="drop-here" accept="application/pdf" name="pdf" onchange="getFile(event)">
+                            <div class="text text-drop">drop here or click to upload</div>
+                            <div class="text text-upload">uploading</div>
+                            <svg class="progress-wrapper" width="300" height="300">
+                            <circle class="progress" r="115" cx="150" cy="150"></circle>
+                            </svg>
+                            <svg class="check-wrapper" width="130" height="130">
+                            <polyline class="check" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+                            </svg>
+                            <div class="shadow" id="shadow"></div>
+                        </div>
+                </div>
+            <div class="upload-details">
+                <div class="cross-btn-place">
+                    <div class="close-tab">
+                        <a href="#" class="close-btn" onclick="hideupcardcross()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59L7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12L5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            <h4>Title</h4>
+            <input type="text" id='title' class="yw-input" placeholder="Type..." required>
+            <h4>Subject</h4>
+            <input type="text" id='subject' class="yw-inputsub" placeholder="Type..." required>
+            <h4>Description</h4>
+            <textarea id='discription' class="yw-inputdisp" placeholder="Type..." required></textarea>
+            <div class="btn-upload">
+
+                <a class="upbtn upload" value="submit" onclick="uploadPDF()">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12 16q-.425 0-.713-.288T11 15V7.85L9.125 9.725q-.3.3-.7.3T7.7 9.7q-.3-.3-.287-.712T7.7 8.3l3.6-3.6q.15-.15.325-.212T12 4.425q.2 0 .375.063t.325.212l3.6 3.6q.3.3.288.713T16.3 9.7q-.3.3-.713.313t-.712-.288L13 7.85V15q0 .425-.288.713T12 16Zm-6 4q-.825 0-1.413-.588T4 18v-2q0-.425.288-.713T5 15q.425 0 .713.288T6 16v2h12v-2q0-.425.288-.713T19 15q.425 0 .713.288T20 16v2q0 .825-.588 1.413T18 20H6Z"/>
+                        </svg>
+                    </div>
+                    Upload
+                </a>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" id="title-input" name="title-input" value="">
+                <input type="hidden" id="subject-input" name="subject-input" value="">
+                <input type="hidden" id="description-input" name="description-input" value="">
+                <input type="hidden" id='pdfuploadurl' name="getpdfurl" value="">
+                <button ttype="submit" value="submit"  id="uploadnotes" name="uploadnotes" style="display: none;"></button>
+                
+            </form>
+
+        </div>
+
+
+        </div>
+
+        <div class="upload-notes-container hide" id="editcardid">
+            <div class="cross-btn-place1">
+                <div class="close-tab">
+                    <a class="close-btn" onclick="hideeditcard()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59L7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12L5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+                <div class="upload-container">
+                    <div class="uploadcontent " id="uploadcontent">
+                        <div class="upload-dcontainer" id="uploadcontent1">
+                            <input type="file" class="drop-here" accept="application/pdf" name="pdf" onchange="getFile(event)">
+                            <div class="text text-drop">drop here or click to upload</div>
+                            <div class="text text-upload">uploading</div>
+                            <svg class="progress-wrapper" width="300" height="300">
+                            <circle class="progress" r="115" cx="150" cy="150"></circle>
+                            </svg>
+                            <svg class="check-wrapper" width="130" height="130">
+                            <polyline class="check" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+                            </svg>
+                            <div class="shadow" id="shadow"></div>
+                        </div>
+                        <div class="deletecontainer " id="deletecontainer" style="display: flex;flex-direction: column;align-items: center;">
+                            <div class="deletetxt" style="font-size: 1.2em;color: #fff;">
+                                <span>Click to delete your previous uploaded PDF</span>
+                            </div>
+                            <div class="blankdiv"></div>
+                            <button class="upbtn upload" onclick="deletePDF()">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                    </svg>
+                                </div>
+                                Delete
+                            </button>
+                        </div> 
+                    </div>    
+                </div>
+            <div class="upload-details">
+                <div class="cross-btn-place">
+                    <div class="close-tab">
+                        <a href="#" class="close-btn" onclick="hideeditcard()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59L7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12L5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            <h4>Title</h4>
+            <input type="text" id='edit-title' class="yw-input" placeholder="Type..." required>
+            <h4>Subject</h4>
+            <input type="text" id='edit-subject' class="yw-inputsub" placeholder="Type..." required>
+            <h4>Description</h4>
+            <textarea id='edit-discription' class="yw-inputdisp" placeholder="Type..." required></textarea>
+            <div class="btn-upload">
+
+                <a class="upbtn upload" value="submit" onclick="editNotes()">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M5 19h1.4l8.625-8.625l-1.4-1.4L5 17.6V19ZM19.3 8.925l-4.25-4.2L17.875 1.9L22.1 6.125l-2.8 2.8ZM3 21v-4.25l10.6-10.6l4.25 4.25L7.25 21H3ZM14.325 9.675l-.7-.7l1.4 1.4l-.7-.7Z"/>
+                        </svg>
+                    </div>
+                    Edit
+                </a>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" id="title-input" name="title-input" value="">
+                <input type="hidden" id="subject-input" name="subject-input" value="">
+                <input type="hidden" id="description-input" name="description-input" value="">
+                <input type="hidden" id='pdfuploadurl' name="getpdfurl" value="">
+                <button ttype="submit" value="submit"  id="uploadnotes" name="uploadnotes" style="display: none;"></button>
+                
+            </form>
+
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" id="edit-title-input" name="edit-title-input" value="">
+                <input type="hidden" id="edit-subject-input" name="edit-subject-input" value="">
+                <input type="hidden" id="edit-description-input" name="edit-description-input" value="">
+                <input type="hidden" id='edit-pdfuploadurl' name="edit-getpdfurl" value="">
+                <input type="hidden" id='edit-uniqueid' name="edit-uniqueid" value="">
+                <button type="submit" value="submit"  id="edit-uploadnotes" name="editnotes" style="display: none;"></button>
+                
+            </form>
+
+        </div>
+
+    {% endblock %}
+    {% block addscript %}
+    <script>
+        document.getElementById('profilename').innerHTML = "{{user_fullname}}"
+        document.getElementById('profile_Image').setAttribute("src", "{{user_pfp}}")
+      </script>
+        <script>
+            var fileUpload = document.querySelector(".upload-dcontainer");
+
+            fileUpload.addEventListener("dragover", function() {
+            this.classList.add("drag");
+            this.classList.remove("drop", "done");
+            });
+
+            fileUpload.addEventListener("dragleave", function() {
+            this.classList.remove("drag");
+            });
+
+            fileUpload.addEventListener("drop", start, false);
+            fileUpload.addEventListener("change", start, false);
+
+            function start() { 
+            this.classList.remove("drag");
+            this.classList.add("drop");
+            setTimeout(() => this.classList.add("done"), 3000);
+            }
+        </script>
+
+        <script>
+            var fileUpload = document.getElementById("uploadcontent1");
+
+            fileUpload.addEventListener("dragover", function() {
+            this.classList.add("drag");
+            this.classList.remove("drop", "done");
+            });
+
+            fileUpload.addEventListener("dragleave", function() {
+            this.classList.remove("drag");
+            });
+
+            fileUpload.addEventListener("drop", start, false);
+            fileUpload.addEventListener("change", start, false);
+
+            function start() { 
+            this.classList.remove("drag");
+            this.classList.add("drop");
+            setTimeout(() => this.classList.add("done"), 3000);
+            }
+        </script>
+
+        <script>
+            var oldpdf_url;
+            var unique_Id;
+            function hideupcard() {
+                var upcard = document.getElementById("upcardid");
+                var animation = document.querySelector(".upload-dcontainer");
+            
+                upcard.classList.toggle("hide");
+            }
+
+                
+            function hideupcardcross() {
+                var upcard = document.getElementById("upcardid");
+                var animation = document.querySelector(".upload-dcontainer");
+                if (animation.classList.contains('drop') & animation.classList.contains('done')) {
+                    animation.classList.remove("drop", "done"); 
+                    upcard.classList.toggle("hide");  
+                    console.log('true')
+                }
+                else{
+                    upcard.classList.toggle("hide");
+                }
+            }
+
+        </script>
+    <script>
+        let buttons = document.querySelectorAll(".app-sidebar-link"); 
+        buttons[0].classList.remove('active')
+        buttons[1].classList.add('active')
+        buttons[2].classList.remove('active')
+        buttons[3].classList.remove('active')
+      </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+      <script type="text/javascript" >
+
+const firebaseConfig = {
+    apiKey: "AIzaSyA0U8lSsP8EgO-MnwkopeLbokCb5fhJna0",
+    authDomain: "notesync-2184.firebaseapp.com",
+    databaseURL: "https://notesync-2184-default-rtdb.firebaseio.com",
+    projectId: "notesync-2184",
+    storageBucket: "notesync-2184.appspot.com",
+    messagingSenderId: "436756773807",
+    appId: "1:436756773807:web:4b285eec661059027c8d5a",
+    measurementId: "G-Z3WN96RBBK"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    var fileItem;
+    var fileName;
+    
+    function getFile(e){
+        fileItem = e.target.files[0];
+        fileName = fileItem.name;
+        console.log(fileItem)
+        console.log(fileName)
+    }
+    function hideeditcard(oldurl,unique_id) {
+        var upcard = document.getElementById("editcardid");
+        var hideorshowup = document.getElementById('uploadcontent1');
+        var hideorshowdel = document.getElementById('deletecontainer');
+        console.log(unique_id)
+        let fielddata = db.collection("Your Work").doc(unique_id)
+        var PDF = 'PDF'
+        document.getElementById('edit-uniqueid').value = unique_id;
+        fielddata.get().then(function(doc) {
+            oldpdf_url = doc.data().PDF;
+            console.log('edit url'+ oldpdf_url)
+            console.log(oldpdf_url)
+        if(oldpdf_url === ''){
+            hideorshowdel.style.display = 'none';
+            hideorshowup.style.display = 'flex';
+        }
+        else{
+            hideorshowdel.style.display = 'flex';
+            hideorshowup.style.display = 'none';
+        }
+        })  
+        
+        unique_Id = unique_id
+        upcard.classList.toggle("hide");
+    }
+    function deletePDF(){
+        var storageRef = firebase.storage().refFromURL(oldpdf_url);
+        var hideorshowup = document.getElementById('uploadcontent1');
+        var hideorshowdel = document.getElementById('deletecontainer');
+        console.log(unique_Id)
+        var docRef = db.collection("Your Work").doc(unique_Id);
+        docRef.update({
+            PDF: ''
+        })
+        storageRef.delete()
+        oldpdf_url = ''
+        if(oldpdf_url === ''){
+            hideorshowdel.style.display = 'none';
+            hideorshowup.style.display = 'flex';
+        }
+        else{
+            hideorshowdel.style.display = 'flex';
+            hideorshowup.style.display = 'none';
+        }
+    }
+    function uploadPDF(){
+
+
+        const storageRef = firebase.storage().ref();
+        const pdfRef = storageRef.child("PDFs/"+fileName);
+
+
+        const task = pdfRef.put(fileItem)
+
+        task.then(snapshot => {
+            snapshot.ref.getDownloadURL().then(url => {
+                document.getElementById('pdfuploadurl').value = url;
+                document.getElementById('title-input').value = document.getElementById('title').value;
+                document.getElementById('subject-input').value = document.getElementById('subject').value;
+                document.getElementById('description-input').value = document.getElementById('discription').value;
+                document.getElementById('uploadnotes').click();
+              })
+        })
+    }
+    
+    function editNotes(){
+        const storageRef = firebase.storage().ref();
+        const pdfRef = storageRef.child("PDFs/"+fileName);
+
+        
+        const task = pdfRef.put(fileItem)
+        task.then(snapshot => {
+            snapshot.ref.getDownloadURL().then(url => {
+                document.getElementById('edit-pdfuploadurl').value = url;
+                document.getElementById('edit-title-input').value = document.getElementById('edit-title').value;
+                document.getElementById('edit-subject-input').value = document.getElementById('edit-subject').value;
+                document.getElementById('edit-description-input').value = document.getElementById('edit-discription').value;
+                document.getElementById('edit-uploadnotes').click();
+              })
+        })
+    }
+      </script>
+      <script>
+
+        const searchInput = document.querySelector("[data-search-input]");
+        let noteCards = document.querySelectorAll("[dash-project-box-wrapper]");
+        let maincard = document.querySelector("[main-card-container]")
+        
+        console.clear();
+        searchInput.addEventListener("input", e => {
+          const search_value = e.target.value.toLowerCase();
+          let i = 0;
+          noteCards.forEach(user => {
+            
+              let sub = user.children[0].children[1].children[0].textContent;  
+              let title = user.children[0].children[2].children[0].textContent;
+              
+              const isVisible = sub.toLowerCase().startsWith(search_value) || title.toLowerCase().includes(search_value)
+
+              maincard.children[i].classList.toggle("hide", !isVisible)
+              i = i + 1;
+          })
+    })
+      </script>
+    {% endblock %}
+
+</body>
+</html>

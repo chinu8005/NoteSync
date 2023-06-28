@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'mysite/CSS/admin.css'%}">
+    <title>Admin Login</title>
+</head>
+<body class="align">
+
+    <div class="grid">
+  
+      <form method="post" class="form login">
+        {% csrf_token %}
+        <header class="login__header">
+          <h3 class="login__title">Admin Login</h3>
+        </header>
+  
+        <div class="login__body">
+  
+          <div class="form__field">
+            <input type="email" name="adminemail" placeholder="Email" required>
+          </div>
+  
+          <div class="form__field">
+            <input type="password" name="adminpass" placeholder="Password" required>
+          </div>
+  
+        </div>
+  
+        <footer class="login__footer">
+          <input type="submit" name="adminbtnclick" value="Login">
+  
+        </footer>
+  
+      </form>
+  
+    </div>
+  
+  </body>
+</html>

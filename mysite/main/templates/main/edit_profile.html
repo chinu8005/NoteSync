@@ -1,0 +1,134 @@
+{% extends 'main/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Profile{% endblock %}</title>
+</head>
+<body>
+    {% block sectionheader %}
+    {% endblock%}
+    {% block maincontainer %}
+        <div class="edit-container">
+            <div class="upload-profile-img">
+                <div class="upload-container" style="width: 70%;">
+                    <div class="upload-dcontainer">
+                        <input type="file" class="drop-here"  accept="image/png, image/gif, image/jpeg" name="pfp" onchange="getFile(event)">
+                        <div class="text text-drop">drop here or click to upload</div>
+                        <div class="text text-upload">uploading</div>
+                        <svg class="progress-wrapper" width="300" height="300">
+                        <circle class="progress" r="115" cx="150" cy="150"></circle>
+                        </svg>
+                        <svg class="check-wrapper" width="130" height="130">
+                        <polyline class="check" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+                        </svg>
+                        <div class="shadow" id="shadow"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="upload-profile-details">
+                <div class="user-details">
+                    <span> About Me </span>
+                    <textarea id='about-me' class="yw-inputdisp" placeholder="Type..." required></textarea>
+                    <span> Profession </span>
+                    <input type="text" id='profession' class="yw-input" placeholder="Type...">
+                    <div class="profilebtn">
+                        <a class="upbtn upload" id="profilesubmitbtn" value="submit" onclick="uploadIMG()">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3 18.5v-13q0-.55.45-.838t.95-.087l15.4 6.5q.625.275.625.925t-.625.925l-15.4 6.5q-.5.2-.95-.088T3 18.5ZM5 17l11.85-5L5 7v3.5l6 1.5l-6 1.5V17Zm0-5V7v10v-5Z"/>
+                                </svg>
+                            </div>
+                            Submit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="pfpurl" id='pfpurl' value="">
+            <input type="hidden" name="aboutme" id='aboutme' value="">
+            <input type="hidden" name="profession" id='send-profession' value="">
+            <input type="submit" name="prfile-submit" id='prfile-submit' value="submit" style="display: none;">
+        </form>
+    {% endblock %}
+
+    {% block addscript %}
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        var fileUpload = document.querySelector(".upload-dcontainer");
+
+        fileUpload.addEventListener("dragover", function() {
+        this.classList.add("drag");
+        this.classList.remove("drop", "done");
+        });
+
+        fileUpload.addEventListener("dragleave", function() {
+        this.classList.remove("drag");
+        });
+
+        fileUpload.addEventListener("drop", start, false);
+        fileUpload.addEventListener("change", start, false);
+
+        function start() { 
+        this.classList.remove("drag");
+        this.classList.add("drop");
+        setTimeout(() => this.classList.add("done"), 3000);
+        }
+    </script>
+
+    <script>
+        const firebaseConfig = {
+        apiKey: "AIzaSyA0U8lSsP8EgO-MnwkopeLbokCb5fhJna0",
+        authDomain: "notesync-2184.firebaseapp.com",
+        databaseURL: "https://notesync-2184-default-rtdb.firebaseio.com",
+        projectId: "notesync-2184",
+        storageBucket: "notesync-2184.appspot.com",
+        messagingSenderId: "436756773807",
+        appId: "1:436756773807:web:4b285eec661059027c8d5a",
+        measurementId: "G-Z3WN96RBBK"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        var fileItem;
+        var fileName;
+
+        function getFile(e){
+        fileItem = e.target.files[0];
+        fileName = fileItem.name;
+        console.log(fileItem)
+        console.log(fileName)
+        }
+
+        function uploadIMG(){
+            const storageRef = firebase.storage().ref();
+            const pfpRef = storageRef.child("PFPs/"+fileName);
+
+
+            const task = pfpRef.put(fileItem)
+
+            task.then(snapshot => {
+                snapshot.ref.getDownloadURL().then(url => {
+                    document.getElementById('pfpurl').value = url;
+                    document.getElementById('aboutme').value = document.getElementById('about-me').value;
+                    document.getElementById('send-profession').value = document.getElementById('profession').value;
+                    document.getElementById('prfile-submit').click();
+                })
+            })
+        }
+    </script>
+    <script>
+        document.getElementById('profilename').innerHTML = "{{user_fullname}}"
+        document.getElementById('profile_Image').setAttribute("src", "{{user_pfp}}")
+      </script>
+    {% endblock %}
+</body>
+</html>

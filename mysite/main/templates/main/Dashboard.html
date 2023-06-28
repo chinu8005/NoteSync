@@ -1,0 +1,111 @@
+{% extends 'main/base.html' %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+</head>
+<body>
+    {% block search %}
+        <div class="search-wrapper">
+            <input class="search-input" type="text" placeholder="Search" data-search-input>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search" viewBox="0 0 24 24">
+            <defs></defs>
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+        </div>
+    {% endblock %}
+
+    {% block tabname %} Dashboard {% endblock %}
+
+    {% block maincontainer %}
+    <form method="get" action="/notes" enctype="multipart/form-data">
+      {% csrf_token %}
+            <div class="project-boxes jsGridView" id="style-3" main-card-container>
+              {% for i in result %}
+              <div class="project-box-wrapper" dash-project-box-wrapper>
+                <div class="project-box" style="background-color: #fee4cb;">
+                  <div class="project-box-header">
+                    <span>{{i.Date.date}}</span>
+                    <span class="box-content-subheader" notecard-box-content-subheader>{{i.Subject}}</span>
+                    
+              </div>
+              <div class="project-box-content-header" project-box-content-header>
+                <p class="box-content-header" notecard-box-content-header>{{i.Title}}</p>
+              </div>
+              <div class="box-progress-wrapper">
+                <p class="box-progress-header">Rating</p>
+                <div class="box-progress-bar">
+                  <span class="box-progress" style="width: {{ i.Rating|mul:20 }}%; background-color: #ff942e;"></span>
+                </div>
+                <p class="box-progress-percentage">{{i.Rating}}/5</p>
+              </div>
+              <div class="project-box-footer">
+                <div class="participants">
+                  <img src="{{ i.PFP_url }}" alt="">
+                </div>
+                <div class="days-left" style="color: #ff942e;">
+                  <button style="background: none;border-style: none;color: #ff942e;text-decoration: none;" name='view_notes' value='{{i.Unique_ID}}'>
+                    View Notes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+        </form>
+
+          {% endblock %}
+
+          {% block addscript %}
+            <script>
+
+              const searchInput = document.querySelector("[data-search-input]");
+              let noteCards = document.querySelectorAll("[dash-project-box-wrapper]");
+              let maincard = document.querySelector("[main-card-container]")
+              
+              console.clear();
+              console.log(noteCards)
+              searchInput.addEventListener("input", e => {
+                const search_value = e.target.value.toLowerCase();
+                let i = 0;
+                noteCards.forEach(user => {
+                  
+                  let sub = user.children[0].children[0].children[1].textContent;  
+                    let title = user.children[0].children[1].children[0].textContent;
+                    //let cmp_sub = sub.toLowerCase();
+                    //let cmp_title = title.toLowerCase();
+                    //console.log(sub);
+                    //console.log(cmp_title)
+                    const isVisible = sub.toLowerCase().startsWith(search_value) || title.toLowerCase().includes(search_value)
+
+                    maincard.children[i].classList.toggle("hide", !isVisible)
+                    i = i + 1;
+                    
+                })
+          })
+            </script>
+
+            <script>
+              let buttons = document.querySelectorAll(".app-sidebar-link"); 
+              buttons[0].classList.add('active')
+              buttons[1].classList.remove('active')
+              buttons[2].classList.remove('active')
+              buttons[3].classList.remove('active')
+            </script>
+            <script>
+              document.getElementById('profilename').innerHTML = document.getElementById('profilenameappend').value
+            </script>
+            <script>
+              document.getElementById('profilename').innerHTML = "{{user_fullname}}"
+              document.getElementById('profile_Image').setAttribute("src", "{{user_pfp}}")
+            </script>
+          {% endblock %}
+          
+</body>
+</html>

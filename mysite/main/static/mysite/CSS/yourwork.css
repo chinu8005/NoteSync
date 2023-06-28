@@ -1,0 +1,95 @@
+.upbtn {
+    --background: #2B3044;
+    --background-hover: #1E2235;
+    --text: #fff;
+    --icon: #fff;
+    --particle: #fff;
+    display: flex;
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    min-width: 113px;
+    padding: 8px 20px 8px 12px;
+    border-radius: 11px;
+    line-height: 24px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--b, var(--background));
+    transition: transform 0.3s, background 0.4s;
+    transform: scale(var(--scale, 1)) translateZ(0);
+  }
+  .upbtn:active {
+    --scale: .95;
+  }
+  .upbtn:hover {
+    --b: var(--background-hover);
+  }
+  .upbtn .icon {
+    --arrow-y: 0;
+    --arrow-rotate: 135;
+    --arrow-top: 10px;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 8px;
+    pointer-events: none;
+  }
+  .upbtn .icon .dot {
+    border-radius: 50%;
+    background: #fff;
+    background: var(--particle);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 4px;
+  }
+  .upbtn .icon .arrow,
+  .upbtn .icon .line {
+    position: absolute;
+    z-index: 1;
+  }
+  .upbtn .icon .arrow {
+    left: 11px;
+    top: 4px;
+    width: 2px;
+    height: 12px;
+    border-radius: 1px;
+    background: var(--icon);
+    transform: translateY(calc(var(--arrow-y) * 1px)) translateZ(0);
+  }
+  .upbtn .icon .arrow:before, .upbtn .icon .arrow:after {
+    content: "";
+    width: 2px;
+    height: 7px;
+    position: absolute;
+    left: 0;
+    top: var(--arrow-top);
+    border-radius: 1px;
+    background: inherit;
+    transform-origin: 1px 1px;
+    transform: rotate(var(--r, calc(var(--arrow-rotate) * 1deg)));
+  }
+  .upbtn .icon .arrow:after {
+    --r: calc(var(--arrow-rotate) * -1deg);
+  }
+  .upbtn .icon .line {
+    width: 24px;
+    height: 24px;
+    display: block;
+    left: 0;
+    top: 7px;
+    fill: none;
+    stroke: var(--icon);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .upbtn .upload .icon {
+    --arrow-rotate: 45;
+    --arrow-top: 0;
+  }

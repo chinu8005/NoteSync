@@ -1,0 +1,84 @@
+{% extends 'main/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Profile{% endblock %}</title>
+</head>
+<body>
+    {% block sectionheader %}
+    {% endblock%}
+    {% block maincontainer %}
+        <header>
+          <div class="userBgImage">
+                <img src="{% static 'mysite/Image/animation.gif' %}" id="myVideo">
+          </div> 
+          
+        </header>
+        <main>
+          <section class="block-one">
+            <div class="avatar">
+                
+              <div class="avatar-hexagon" style="background-image: url({{details.PFP_url}});">
+                <div class="avatar-hexTop"></div>
+                <div class="avatar-hexBottom"></div>
+              </div>
+            </div>
+            <div class="profile-stats">
+              <div class="profile-stats__block">
+                <h2>Posts</h2>
+                <p>{{details.Posts}}</p>
+              </div>
+              <div class="profile-stats__block">
+                <h2>Rank</h2>
+                <p>{{user_rank}}</p>
+              </div>
+              <div class="profile-stats__block">
+                <h2>Credits</h2>
+                <p>{{details.Credit}}</p>
+              </div>
+              <div class="type edit">
+                <a href="/edit-profile" aria-label="follow">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36zM20.71 5.63l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75l1.83-1.83a.996.996 0 0 0 0-1.41z"/>
+                    </svg>
+                    
+                </a>
+            </div>
+            </div>
+          </section>
+          <section class="block-two">
+            <div class="info-block-one">
+              <h1>{{details.Full_Name}}</h1>
+              <p class="info-block-one__profession">
+                @{{details.User_Name}}
+              </p>
+            </div>
+            <div class="info-block-two" style="padding-left: 20px;">
+              <h3>about me</h3>
+              <p>{{details.About_me}}</p>
+              <h3>Profession</h3>
+              <p style="top:10px;">{{details.Profession}}</p>
+              
+            </div>
+          </section>
+        </main>
+        <footer>
+          <div class="footerInner"></div>
+        </footer>
+  
+         
+    {% endblock %}
+
+    {% block addscript %}
+    <script>
+      document.getElementById('profilename').innerHTML = "{{user_fullname}}"
+      document.getElementById('profile_Image').setAttribute("src", "{{user_pfp}}")
+    </script>
+          {% endblock %}
+</body>
+</html>

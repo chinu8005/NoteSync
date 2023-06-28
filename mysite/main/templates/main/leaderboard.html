@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Leaderboard {% endblock %}</title>
+</head>
+<body>
+
+    {% block tabname %} Leaderboard {% endblock %}
+
+    {% block maincontainer %}
+        <div class="l-grid">
+            <div class="l-grid__item l-grid__item--sticky">
+            <div class="c-card u-bg--light-gradient u-text--dark">
+                <div class="c-card__body">
+                <div class="u-display--flex u-justify--space-between">
+                    <div class="u-text--left">
+                    <div class="u-text--small">My Rank</div>
+                    <h2>{{user_rank}} Place</h2>
+                    </div>
+                    <div class="u-text--right">
+                    <div class="u-text--small">My Score</div>
+                    <h2>{{user_score}}</h2>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="l-grid__item">
+            <div class="c-card">
+                <div class="c-card__header">
+                <h3>Top Contributors</h3>
+                </div>
+                <div class="c-card__body">
+                <ul class="c-list" id="list">
+                    <li class="c-list__item">
+                    <div class="c-list__grid">
+                        <div class="u-text--left u-text--small u-text--medium">Rank</div>
+                        <div class="u-text--left u-text--small u-text--medium">Name</div>
+                        <div class="u-text--right u-text--small u-text--medium"># of Score</div>
+                    </div>
+                    </li>
+
+                    {% for i in user_list %}
+                    <li class="c-list__item">
+                        <div class="c-list__grid">
+                            <div class="c-flag c-place u-bg--transparent">{{ forloop.counter }}</div>
+                            <div class="c-media">
+                                <img class="c-avatar c-media__img" src="{{i.PFP_url}}" />
+                                <div class="c-media__content">
+                                    <div class="c-media__title">{{i.Full_Name}}</div>
+                                    <form  method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" name="clickeduser" class="c-media__link u-text--small" style="background: none;border: none;" target="_blank" value="{{i.User_Name}}">@{{i.User_Name}}</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="u-text--right c-kudos">
+                                <div class="u-mt--8">
+                                    <strong>{{i.Credit}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                      </li>
+                    {% endfor %}
+                      
+                </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+            
+    {% endblock %}
+
+    {% block addscript %}
+    <script>
+        let buttons = document.querySelectorAll(".app-sidebar-link"); 
+        buttons[0].classList.remove('active')
+        buttons[1].classList.remove('active')
+        buttons[2].classList.add('active')
+        buttons[3].classList.remove('active')
+      </script>
+      <script>
+        document.getElementById('profilename').innerHTML = "{{user_fullname}}"
+        document.getElementById('profile_Image').setAttribute("src", "{{user_pfp}}")
+      </script>
+    {% endblock %}
+    
+</body>
+</html>

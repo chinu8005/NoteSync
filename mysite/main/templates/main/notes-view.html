@@ -1,0 +1,251 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Notes{% endblock %}</title>
+</head>
+<body>
+    {% block sectionheader %}
+    {% endblock %}
+    {% block maincontainer %}
+    <div class="main-note-content">
+        <div class="notes-container">
+            <div class="pdf-view">
+                <embed src="{{pdf}}" height="550" width="550" style="padding-bottom: 20px;">
+            </div>
+            <div class="pdf-description">
+                <div class="report-notes">
+                    <a class="report-btn" onclick="report_toggle()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" style="color: red;">
+                            <path fill="currentColor" d="M8.75 18q.325 0 .537-.213t.213-.537V13H12l.725 1.45q.125.275.375.413t.525.137H17q.425 0 .713-.288T18 14v-4q0-.425-.288-.713T17 9h-2l-.725-1.45q-.125-.275-.375-.413T13.375 7H9q-.425 0-.713.288T8 8v9.25q0 .325.213.537T8.75 18ZM12 22q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22Z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="title-rating">
+                    <div class="title-note">
+                        <h3>{{title}}</h3>
+                    </div>
+                    <div class="rating-note">
+                        {% if rating == 0 %}
+                            <span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                        {% endif %}  
+                        {% if rating == 1 %}
+                            <span><span class="s1">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                        {% endif %} 
+                        {% if rating == 2 %}
+                            <span><span class="s1">★</span><span class="s1">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                        {% endif %} 
+                        {% if rating == 3 %}
+                            <span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                        {% endif %} 
+                        {% if rating == 4 %}
+                            <span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s5">★</span></span>
+                        {% endif %} 
+                        {% if rating == 5 %}
+                            <span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span></span>
+                        {% endif %}   
+                    </div>    
+                </div>
+                <div class="discription-content">
+                    <div class="disp-note">
+                        <p>{{discription}}</p>
+                    </div>      
+                </div>
+                <div class="download-notes">
+                    <div class="username-notes">
+                        <span>@{{username}}</span>
+                    </div>
+                    <div>
+                        <a class="upbtn upload" href="{{pdf}}" target="_blank" style="text-decoration: none;">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 16 16">
+                                    <g fill="currentColor">
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/><path d="M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102c.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645a19.697 19.697 0 0 0 1.062-2.227a7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136c.075-.354.274-.672.65-.823c.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538c.007.188-.012.396-.047.614c-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686a5.753 5.753 0 0 1 1.334.05c.364.066.734.195.96.465c.12.144.193.32.2.518c.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416a.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.712 5.712 0 0 1-.911-.95a11.651 11.651 0 0 0-1.997.406a11.307 11.307 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238c-.328.194-.541.383-.647.547c-.094.145-.096.25-.04.361c.01.022.02.036.026.044a.266.266 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.71 12.71 0 0 1 1.01-.193a11.744 11.744 0 0 1-.51-.858a20.801 20.801 0 0 1-.5 1.05zm2.446.45c.15.163.296.3.435.41c.24.19.407.253.498.256a.107.107 0 0 0 .07-.015a.307.307 0 0 0 .094-.125a.436.436 0 0 0 .059-.2a.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.876 3.876 0 0 0-.612-.053zM8.078 7.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198a.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283c-.04.192-.03.469.046.822c.024.111.054.227.09.346z"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            View
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comment-review">
+            {% if rated == '' %}
+
+            <div class="comment-box">
+                <span>Write a Review</span>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="main-input-review">
+                        
+                        <textarea name="review-input" class="review-user-inc" placeholder="Describe your experience..."></textarea>
+                        <div class="rating-submit">
+                            <div class="rating">
+                                <a  href='#5' title="Give 5 stars" onclick="updateRating(5)">★</a>
+                                <a  href='#4' title="Give 4 stars" onclick="updateRating(4)">★</a>
+                                <a  href='#3' title="Give 3 stars" onclick="updateRating(3)">★</a>
+                                <a  href='#2' title="Give 2 stars" onclick="updateRating(2)">★</a>
+                                <a  href='#1' title="Give 1 stars"  onclick="updateRating(1)">★</a>
+                            </div>
+                            <div class="comment-submit">
+                                   
+                                    <input type="hidden" id="ratingInput" name="rating" value="">
+                                    <button type="submit" class="upbtn upload" name="submitReview" value="Submit">
+                                        <div class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M3 18.5v-13q0-.55.45-.838t.95-.087l15.4 6.5q.625.275.625.925t-.625.925l-15.4 6.5q-.5.2-.95-.088T3 18.5ZM5 17l11.85-5L5 7v3.5l6 1.5l-6 1.5V17Zm0-5V7v10v-5Z"/>
+                                            </svg>
+                                        </div>
+                                        Submit
+                                    </button>
+                            </div>
+                        </div>
+                    
+                    </div> 
+                </form>
+
+            </div>
+            {% endif %} 
+
+            <div class="review-container" style="padding-top: 50px;">
+                <span class="review-title">User Reviews</span>
+                    <div class="user-review">
+                        {% for i in comments %}
+                            <div class="review-background">
+                                <div class="user-rating">
+                                    <span style="font-size: 0.85em;">@{{i.username}}</span>
+                                    {% if i.Rating == 0 %}
+                                        <span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                                    {% endif %}  
+                                    {% if i.Rating == 1 %}
+                                        <span><span class="s1">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                                    {% endif %} 
+                                    {% if i.Rating == 2 %}
+                                        <span><span class="s1">★</span><span class="s1">★</span><span class="s5">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                                    {% endif %} 
+                                    {% if i.Rating == 3 %}
+                                        <span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s5">★</span><span class="s5">★</span></span>
+                                    {% endif %} 
+                                    {% if i.Rating == 4 %}
+                                        <span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s5">★</span></span>
+                                    {% endif %} 
+                                    {% if i.Rating == 5 %}
+                                        <span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span><span class="s1">★</span></span>
+                                    {% endif %}
+                                </div> 
+                                <div class="main-review">
+                                    <span>
+                                        {{i.Comment}}
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                     
+            </div>
+            
+        </div>
+         
+    </div>
+
+    
+    {% endblock %} 
+    {% block uploadcard %}
+        <div class="report-card hide" id="report-card">
+                <div class="option-section">
+                    <span style="font-size: 1.5em;padding: 5px;">Report Content</span>
+                    <div class="options-dir" style="width: 100%;height: 70%; display: flex;align-items: center;flex-direction: column;justify-content: center;">
+                        <label class="radio-button">
+                            <input value="Plagiarism" name="example-radio" type="radio" onclick="reportcontent1()" checked>
+                            <span class="radio"></span>
+                            Plagiarism
+                        </label>
+                        
+                        <label class="radio-button">
+                            <input value="Other" name="example-radio" type="radio" onclick="reportcontent()">
+                            <span class="radio"></span>
+                            Other
+                        </label>
+                    </div>  
+                </div>
+                <div class="enter-details" style="height: 100%;width: 100%;">
+                    <form method="post">
+                        {% csrf_token %}
+                    <div id="plg-hide">
+                        <div class="plagiarism-content" style="display: flex;flex-direction: column;height: 100%;width: 100%;justify-content: center;align-items: center;" >
+                            <span style="padding: 15px;">Orignal Notes Link</span>
+                            <input type="text" id='title' name="ourl" class="yw-input" placeholder="Url..." required>
+                            <span style="padding: 15px;">Copied Notes Link</span>
+                            <input type="text" id='title' name="curl" class="yw-input" placeholder="Url..." required>
+                            <div style="width: 100%;padding-top: 10px; display: flex;justify-content: end;">
+                                <button type="submit" class="upbtn upload" name="smtplagiarism" value="plagiarism">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 18.5v-13q0-.55.45-.838t.95-.087l15.4 6.5q.625.275.625.925t-.625.925l-15.4 6.5q-.5.2-.95-.088T3 18.5ZM5 17l11.85-5L5 7v3.5l6 1.5l-6 1.5V17Zm0-5V7v10v-5Z"/>
+                                        </svg>
+                                    </div>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <div id="plg-hide2" style="display: none; width: 100%;height: 100%;">
+                        <div class="plagiarism-content" style="display: flex;flex-direction: column;height: 100%;width: 100%;justify-content: center;align-items: center;" >
+                            <span style="padding: 15px;">Discribe the problem</span>
+                            <textarea name="problem-input" class="review-user-inc" placeholder="Type..." style="width: 70%;height: 45%;"></textarea>
+                            <div style="width: 100%;padding-top: 10px; display: flex;justify-content: end;">
+                                <button type="submit" class="upbtn upload" name="smtother" value="other">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M3 18.5v-13q0-.55.45-.838t.95-.087l15.4 6.5q.625.275.625.925t-.625.925l-15.4 6.5q-.5.2-.95-.088T3 18.5ZM5 17l11.85-5L5 7v3.5l6 1.5l-6 1.5V17Zm0-5V7v10v-5Z"/>
+                                        </svg>
+                                    </div>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+        </div> 
+    {% endblock %}
+    
+    {% block addscript %}
+    <script>
+        function updateRating(rating) {
+            var test = document.getElementById("ratingInput").value = rating;
+            console.log(test)
+        }
+        function reportcontent(){
+            document.getElementById('plg-hide').style.display ='none';
+            document.getElementById('plg-hide2').style.display ='flex';
+        }
+        function reportcontent1(){
+            document.getElementById('plg-hide').style.display ='flex';
+            document.getElementById('plg-hide2').style.display ='none';
+        }
+    </script>
+    <script>
+        function report_toggle(){
+            var report_card = document.getElementById('report-card')
+            report_card.classList.toggle("hide")
+        }
+    </script>
+    <script>
+        document.getElementById('profilename').innerHTML = "{{user_fullname}}"
+        document.getElementById('profile_Image').setAttribute("src", "{{user_pfp}}")
+
+      </script>
+    {% endblock %}
+</body>
+</html>
