@@ -1,4 +1,4 @@
-**# NoteSync**
+# NoteSync
 
 The credit-based note system is a popular approach to encourage students to actively engage in their studies. However, it can be challenging for students to keep track of their notes, especially when they have multiple classes with different credit systems. To address this problem, a new app has been developed that synchronizes all notes for each student in one central location, making it easy for them to access their notes from any device. This app not only saves students time but also ensures that they never miss any important information or notes. With this innovative solution, students can focus more on their studies and less on organizing their notes, leading to better academic outcomes.
 
